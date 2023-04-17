@@ -152,55 +152,30 @@ class Board:
     return False
 
   def diagonal_win(self):
-    win_count = 0
-    win_count_offset_1 = 0
-    win_count_offset_2 = 0
-    row = 1
-    row_offset_1 = 2
-    row_offset_2 = 3
-    for column in ['A', 'B', 'C', 'D', 'E', 'F']:
-      if self.columns[column][row].piece == 'X':
-        win_count += 1
-      elif win_count > 3:
-        return True
-      else:
-        win_count = 0
-      if row < 5:
-        if self.columns[column][row + 2].piece == 'X':
-          win_count_offset_2 += 1
-        elif win_count_offset_1 > 3:
-          return True
-        else:
-          win_count_offset_2 = 0
-      else:
-        row += 1
-        continue
-      if row < 6:
-        if self.columns[column][row + 1].piece == 'X':
-          win_count_offset_1 += 1
-        elif win_count_offset_1 > 3:
-          return True
-        else:
-          win_count_offset_1 = 0
-      else:
-        row += 1
-        continue
-      row += 1
-    if win_count > 3:
-      return True
-    else:
-      win_count = 0
-      row = 1
-      for column in ['A', 'B', 'C', 'D', 'E', 'F', 'G']:
-        if row > 6:
-          continue
-        else:
-          if self.columns[column][row].piece == 'O':
-            win_count += 1
-          elif win_count > 3:
+    # Check for diagonal wins starting from the top-left corner
+    for row in range(3):
+      for col in range(4):
+        if self.columns["A"][row + 1].piece == self.columns["B"][row + 2].piece == self.columns["C"][row + 3].piece == self.columns["D"][row + 4].piece and self.columns["A"][row + 1].piece != ".":
             return True
-          else:
-            win_count = 0
-        row += 1
+        elif self.columns["B"][row + 1].piece == self.columns["C"][row + 2].piece == self.columns["D"][row + 3].piece == self.columns["E"][row + 4].piece and self.columns["B"][row + 1].piece != ".":
+            return True
+        elif self.columns["C"][row + 1].piece == self.columns["D"][row + 2].piece == self.columns["E"][row + 3].piece == self.columns["F"][row + 4].piece and self.columns["C"][row + 1].piece != ".":
+            return True
+        elif self.columns["D"][row + 1].piece == self.columns["E"][row + 2].piece == self.columns["F"][row + 3].piece == self.columns["G"][row + 4].piece and self.columns["D"][row + 1].piece != ".":
+            return True
+
+    # Check for diagonal wins starting from the top-right corner
+    for row in range(3):
+      for col in range(3, 7):
+        if self.columns["G"][row + 1].piece == self.columns["F"][row + 2].piece == self.columns["E"][row + 3].piece == self.columns["D"][row + 4].piece and self.columns["G"][row + 1].piece != ".":
+            return True
+        elif self.columns["F"][row + 1].piece == self.columns["E"][row + 2].piece == self.columns["D"][row + 3].piece == self.columns["C"][row + 4].piece and self.columns["F"][row + 1].piece != ".":
+            return True
+        elif self.columns["E"][row + 1].piece == self.columns["D"][row + 2].piece == self.columns["C"][row + 3].piece == self.columns["B"][row + 4].piece and self.columns["E"][row + 1].piece != ".":
+            return True
+        elif self.columns["D"][row + 1].piece == self.columns["C"][row + 2].piece == self.columns["B"][row + 3].piece == self.columns["A"][row + 4].piece and self.columns["D"][row + 1].piece != ".":
+            return True
+
+    return False
 
 
